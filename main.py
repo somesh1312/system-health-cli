@@ -1,6 +1,6 @@
 import argparse
 import sys
-
+from syshealth.config import load_config
 from syshealth.cpu import get_cpu_info
 from syshealth.memory import get_memory_info
 from syshealth.disk import get_disk_info
@@ -35,11 +35,21 @@ def create_parser() -> argparse.ArgumentParser:
 
 
 def generate_report(disk_path: str, top: int) -> str:
-
+    config = load_config()
     system = get_system_info()
-    cpu = get_cpu_info()
-    memory = get_memory_info()
-    disk = get_disk_info(disk_path)
+    cpu = get_cpu_info(
+    warning=config["cpu"]["warning"],
+    critical=config["cpu"]["critical"]
+)
+    memory = get_memory_info(
+    warning=config["memory"]["warning"],
+    critical=config["memory"]["critical"]
+)
+    disk = get_disk_info(
+    path=disk_path,
+    warning=config["disk"]["warning"],
+    critical=config["disk"]["critical"]
+)
     process_data = get_process_info(top)
 
     lines: list[str] = []

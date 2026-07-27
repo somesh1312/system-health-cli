@@ -1,12 +1,15 @@
 import os
-import psutil
 from typing import Any
+
+import psutil
 
 from syshealth.utils import get_status
 
 
-def get_cpu_info() -> dict[str, Any]:
-    """Collect CPU health information."""
+def get_cpu_info(
+    warning: float,
+    critical: float
+) -> dict[str, Any]:
 
     cpu_usage = psutil.cpu_percent(interval=1)
 
@@ -15,6 +18,7 @@ def get_cpu_info() -> dict[str, Any]:
 
     try:
         load_average = os.getloadavg()
+
     except (AttributeError, OSError):
         load_average = (0.0, 0.0, 0.0)
 
@@ -23,5 +27,9 @@ def get_cpu_info() -> dict[str, Any]:
         "logical_cores": logical_cores,
         "physical_cores": physical_cores,
         "load_average": load_average,
-        "status": get_status(cpu_usage)
+        "status": get_status(
+            cpu_usage,
+            warning,
+            critical
+        )
     }
