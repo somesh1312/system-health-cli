@@ -1,18 +1,18 @@
 import argparse
 import sys
+import logging
 from datetime import datetime
 
 from syshealth.config import load_config
 from syshealth.cpu import get_cpu_info
 from syshealth.disk import get_disk_info
-from syshealth.logging import setup_logger
+from syshealth.logging_config import setup_logging
 from syshealth.memory import get_memory_info
 from syshealth.process import get_process_info
 from syshealth.system import get_system_info
 
 
-logger = setup_logger()
-
+logger = logging.getLogger(__name__)
 
 def create_parser() -> argparse.ArgumentParser:
     """Create and configure the command-line argument parser."""
@@ -38,6 +38,29 @@ def create_parser() -> argparse.ArgumentParser:
         "--output",
         help="Optional file path where the health report will be saved.",
     )
+    parser.add_argument(
+
+    "--log-level",
+
+    choices=[
+
+        "DEBUG",
+
+        "INFO",
+
+        "WARNING",
+
+        "ERROR",
+
+        "CRITICAL",
+
+    ],
+
+    default="INFO",
+
+    help="Logging level. Default: INFO",
+
+)
 
     return parser
 
@@ -217,20 +240,33 @@ def save_report(report: str, filename: str) -> None:
             f"Unable to write report to '{filename}': {error}"
         ) from error
 
-
 def main() -> None:
     """Run the system health command-line application."""
 
     parser = create_parser()
     args = parser.parse_args()
 
+    try:
+        setup_logging(
+            log_level=args.log_level,
+        )
+
+    except (RuntimeError, ValueError) as error:
+        print(
+            f"Logging configuration failed: {error}",
+            file=sys.stderr,
+        )
+        sys.exit(3)
+
     if args.top < 1:
         parser.error("--top must be greater than zero")
 
     logger.info(
-        "System health check started: disk=%s, top=%s",
+        "System health check started: "
+        "disk=%s, top=%s, log_level=%s",
         args.disk,
         args.top,
+        args.log_level,
     )
 
     try:
@@ -248,7 +284,7 @@ def main() -> None:
             )
 
             logger.info(
-                "Health report saved to %s",
+                "Health report saved to '%s'",
                 args.output,
             )
 
@@ -257,7 +293,8 @@ def main() -> None:
         exit_code = get_exit_code(overall_status)
 
         logger.info(
-            "System health check completed: status=%s, exit_code=%s",
+            "System health check completed: "
+            "status=%s, exit_code=%s",
             overall_status,
             exit_code,
         )
@@ -265,9 +302,8 @@ def main() -> None:
         sys.exit(exit_code)
 
     except RuntimeError as error:
-        logger.error(
-            "System health check failed: %s",
-            error,
+        logger.exception(
+            "System health check failed"
         )
 
         print(
@@ -278,7 +314,9 @@ def main() -> None:
         sys.exit(3)
 
     except KeyboardInterrupt:
-        logger.warning("System health check interrupted by user")
+        logger.warning(
+            "System health check interrupted by user"
+        )
 
         print(
             "\nSystem health check interrupted.",
@@ -286,7 +324,5 @@ def main() -> None:
         )
 
         sys.exit(130)
-
-
 if __name__ == "__main__":
     main()

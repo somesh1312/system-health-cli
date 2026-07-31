@@ -11,27 +11,29 @@ def load_config(filename: str = "config.json") -> dict[str, Any]:
     Load the application configuration from a JSON file.
 
     Args:
-        filename: Path to the configuration file.
+        filename: Path to the JSON configuration file.
 
     Returns:
-        Dictionary containing configuration values.
+        Dictionary containing the configuration values.
 
     Raises:
-        RuntimeError: If the configuration file cannot be loaded.
+        RuntimeError: If the file cannot be loaded or parsed.
     """
 
-    logger.info("Loading configuration from '%s'", filename)
+    logger.debug(
+        "Attempting to load configuration from '%s'",
+        filename,
+    )
 
     try:
         with open(filename, "r", encoding="utf-8") as file:
             config = json.load(file)
 
-        logger.info("Configuration loaded successfully")
-
-        return config
-
     except FileNotFoundError as error:
-        logger.error("Configuration file '%s' was not found", filename)
+        logger.error(
+            "Configuration file not found: %s",
+            filename,
+        )
 
         raise RuntimeError(
             f"Configuration file '{filename}' was not found."
@@ -39,7 +41,7 @@ def load_config(filename: str = "config.json") -> dict[str, Any]:
 
     except json.JSONDecodeError as error:
         logger.error(
-            "Invalid JSON in '%s': %s",
+            "Invalid JSON in configuration file '%s': %s",
             filename,
             error,
         )
@@ -50,7 +52,7 @@ def load_config(filename: str = "config.json") -> dict[str, Any]:
 
     except PermissionError as error:
         logger.error(
-            "Permission denied while reading '%s'",
+            "Permission denied while reading configuration: %s",
             filename,
         )
 
@@ -60,10 +62,19 @@ def load_config(filename: str = "config.json") -> dict[str, Any]:
 
     except OSError as error:
         logger.error(
-            "Unable to read configuration: %s",
+            "Operating-system error while reading '%s': %s",
+            filename,
             error,
         )
 
         raise RuntimeError(
-            f"Unable to load configuration: {error}"
+            f"Unable to read configuration file "
+            f"'{filename}': {error}"
         ) from error
+
+    logger.info(
+        "Configuration loaded successfully from '%s'",
+        filename,
+    )
+
+    return config
