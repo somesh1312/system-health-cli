@@ -34,7 +34,10 @@ def create_parser() -> argparse.ArgumentParser:
     return parser
 
 
-def generate_report(disk_path: str, top: int) -> str:
+def generate_report(
+    disk_path: str,
+    top: int
+) -> tuple[str, str]:
     config = load_config()
     system = get_system_info()
     cpu = get_cpu_info(
@@ -143,7 +146,9 @@ def generate_report(disk_path: str, top: int) -> str:
     lines.append(f"OVERALL STATUS: {overall_status}")
     lines.append("=" * 55)
 
-    return "\n".join(lines)
+    report = "\n".join(lines)
+
+    return report, overall_status
 
 
 def calculate_overall_status(*statuses: str) -> str:
@@ -184,22 +189,38 @@ def save_report(report: str, filename: str) -> None:
 
 
 def main() -> None:
-
     parser = create_parser()
-
     args = parser.parse_args()
 
-    report = generate_report(
-        disk_path=args.disk,
-        top=args.top
-    )
+    try:
+        report, overall_status = generate_report(
+            disk_path=args.disk,
+            top=args.top
+        )
 
-    print(report)
+        print(report)
 
-    if args.output:
-        save_report(report, args.output)
+        if args.output:
+            save_report(report, args.output)
+            print(f"\nReport saved to {args.output}")
 
-        print(f"\nReport saved to {args.output}")
+        sys.exit(get_exit_code(overall_status))
+
+    except RuntimeError as error:
+        print(f"Error: {error}", file=sys.stderr)
+        sys.exit(3)
+
+def get_exit_code(status: str) -> int:
+    """Convert health status into a process exit code."""
+
+    exit_codes = {
+        "HEALTHY": 0,
+        "WARNING": 1,
+        "CRITICAL": 2,
+        "UNKNOWN": 3
+    }
+
+    return exit_codes.get(status, 3)
 
 
 if __name__ == "__main__":
