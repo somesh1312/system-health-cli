@@ -13,3 +13,7 @@ reports/
 
 # macOS
 .DS_Store
+
+.coverage
+htmlcov/
+.pytest_cache/
