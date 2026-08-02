@@ -1,7 +1,7 @@
 import logging
 from pathlib import Path
 
-from syshealth.logging_config import setup_logging
+from winze.logging_config import setup_logging
 import pytest
 
 def test_setup_logging_adds_console_and_file_handlers(
@@ -14,7 +14,7 @@ def test_setup_logging_adds_console_and_file_handlers(
     try:
         root_logger.handlers.clear()
 
-        log_file = tmp_path / "syshealth.log"
+        log_file = tmp_path / "winze.log"
 
         setup_logging(
             log_level="DEBUG",

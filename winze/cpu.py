@@ -4,8 +4,8 @@ from typing import Any
 
 import psutil
 
-from syshealth.utils import get_status
-from syshealth.utils import get_status, log_health_status
+from winze.utils import get_status
+from winze.utils import get_status, log_health_status
 
 logger = logging.getLogger(__name__)
 

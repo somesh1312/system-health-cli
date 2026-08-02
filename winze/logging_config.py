@@ -15,7 +15,7 @@ DATE_FORMAT = "%Y-%m-%d %H:%M:%S"
 
 def setup_logging(
     log_level: str = "INFO",
-    log_file: str = "logs/syshealth.log",
+    log_file: str = "logs/winze.log",
 ) -> None:
     """
     Configure centralized application logging.

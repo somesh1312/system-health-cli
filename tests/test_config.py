@@ -4,7 +4,7 @@ from unittest.mock import patch
 
 import pytest
 
-from syshealth.config import load_config
+from winze.config import load_config
 
 
 def test_load_config_returns_configuration(

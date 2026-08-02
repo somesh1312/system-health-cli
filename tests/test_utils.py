@@ -1,4 +1,4 @@
-from syshealth.utils import get_status,bytes_to_gb
+from winze.utils import get_status,bytes_to_gb
 
 import pytest
 

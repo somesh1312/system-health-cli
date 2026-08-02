@@ -1,20 +1,20 @@
 from unittest.mock import patch
 
-from syshealth.cpu import get_cpu_info
+from winze.cpu import get_cpu_info
 
 
 def test_get_cpu_info_returns_healthy_status() -> None:
     with (
         patch(
-            "syshealth.cpu.psutil.cpu_percent",
+            "winze.cpu.psutil.cpu_percent",
             return_value=35.0,
         ),
         patch(
-            "syshealth.cpu.psutil.cpu_count",
+            "winze.cpu.psutil.cpu_count",
             side_effect=[16, 8],
         ),
         patch(
-            "syshealth.cpu.os.getloadavg",
+            "winze.cpu.os.getloadavg",
             return_value=(0.80, 0.75, 0.60),
         ),
     ):
@@ -33,15 +33,15 @@ def test_get_cpu_info_returns_healthy_status() -> None:
 def test_get_cpu_info_uses_default_when_load_average_unavailable() -> None:
     with (
         patch(
-            "syshealth.cpu.psutil.cpu_percent",
+            "winze.cpu.psutil.cpu_percent",
             return_value=35.0,
         ),
         patch(
-            "syshealth.cpu.psutil.cpu_count",
+            "winze.cpu.psutil.cpu_count",
             side_effect=[16, 8],
         ),
         patch(
-            "syshealth.cpu.os.getloadavg",
+            "winze.cpu.os.getloadavg",
             side_effect=OSError,
         ),
     ):
