@@ -1,7 +1,7 @@
 from datetime import timedelta
 from unittest.mock import patch
 
-from syshealth.system import format_uptime, get_system_info
+from winze.system import format_uptime, get_system_info
 
 
 def test_format_uptime_returns_readable_value() -> None:
@@ -19,23 +19,23 @@ def test_format_uptime_returns_readable_value() -> None:
 def test_get_system_info_returns_platform_information() -> None:
     with (
         patch(
-            "syshealth.system.socket.gethostname",
+            "winze.system.socket.gethostname",
             return_value="test-server",
         ),
         patch(
-            "syshealth.system.platform.system",
+            "winze.system.platform.system",
             return_value="Linux",
         ),
         patch(
-            "syshealth.system.platform.release",
+            "winze.system.platform.release",
             return_value="6.8.0",
         ),
         patch(
-            "syshealth.system.platform.machine",
+            "winze.system.platform.machine",
             return_value="x86_64",
         ),
         patch(
-            "syshealth.system.platform.python_version",
+            "winze.system.platform.python_version",
             return_value="3.12.0",
         ),
     ):

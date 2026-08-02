@@ -1,7 +1,7 @@
 from types import SimpleNamespace
 from unittest.mock import patch
 
-from syshealth.memory import get_memory_info
+from winze.memory import get_memory_info
 
 def test_get_memory_info_returns_healthy_status() -> None:
     fake_memory = SimpleNamespace(
@@ -11,7 +11,7 @@ def test_get_memory_info_returns_healthy_status() -> None:
         percent=50.0,
     )
     with patch(
-        "syshealth.memory.psutil.virtual_memory",
+        "winze.memory.psutil.virtual_memory",
         return_value =fake_memory
     ):
         

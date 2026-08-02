@@ -2,7 +2,7 @@ from types import SimpleNamespace
 from unittest.mock import patch
 
 import psutil
-from syshealth.process import get_process_info
+from winze.process import get_process_info
 
 
 def test_get_process_info_returns_top_processes() -> None:
@@ -35,11 +35,11 @@ def test_get_process_info_returns_top_processes() -> None:
 
     with (
         patch(
-            "syshealth.process.psutil.process_iter",
+            "winze.process.psutil.process_iter",
             return_value=fake_processes,
         ),
         patch(
-            "syshealth.process.psutil.pids",
+            "winze.process.psutil.pids",
             return_value=[101, 202, 303],
         ),
     ):
@@ -103,7 +103,7 @@ def test_get_process_info_skips_access_denied_processes() -> None:
 
         patch(
 
-            "syshealth.process.psutil.process_iter",
+            "winze.process.psutil.process_iter",
 
             return_value=fake_processes,
 
@@ -111,7 +111,7 @@ def test_get_process_info_skips_access_denied_processes() -> None:
 
         patch(
 
-            "syshealth.process.psutil.pids",
+            "winze.process.psutil.pids",
 
             return_value=[102, 204, 305],
 
@@ -154,11 +154,11 @@ def test_get_process_info_skips_zombie_processes() -> None:
 
     with (
         patch(
-            "syshealth.process.psutil.process_iter",
+            "winze.process.psutil.process_iter",
             return_value=fake_processes,
         ),
         patch(
-            "syshealth.process.psutil.pids",
+            "winze.process.psutil.pids",
             return_value=[888, 401],
         ),
     ):

@@ -3,7 +3,7 @@ from typing import Any
 
 import psutil
 
-from syshealth.utils import (
+from winze.utils import (
     bytes_to_gb,
     get_status,
     log_health_status,

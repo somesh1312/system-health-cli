@@ -3,13 +3,13 @@ import sys
 import logging
 from datetime import datetime
 
-from syshealth.config import load_config
-from syshealth.cpu import get_cpu_info
-from syshealth.disk import get_disk_info
-from syshealth.logging_config import setup_logging
-from syshealth.memory import get_memory_info
-from syshealth.process import get_process_info
-from syshealth.system import get_system_info
+from winze.config import load_config
+from winze.cpu import get_cpu_info
+from winze.disk import get_disk_info
+from winze.logging_config import setup_logging
+from winze.memory import get_memory_info
+from winze.process import get_process_info
+from winze.system import get_system_info
 
 
 logger = logging.getLogger(__name__)

@@ -1,8 +1,8 @@
-# 🚀 SysHealth Roadmap
+# 🚀 Winze Roadmap
 
 ## Vision
 
-SysHealth is an open-source, cross-platform system diagnostics and health monitoring CLI designed for Developers, DevOps Engineers, Site Reliability Engineers (SREs), and Platform Engineers.
+Winze is an open-source, cross-platform system diagnostics and health monitoring CLI designed for Developers, DevOps Engineers, Site Reliability Engineers (SREs), and Platform Engineers.
 
 The goal is to help users quickly diagnose system health, identify performance bottlenecks, troubleshoot development environments, and automate health reporting through a lightweight command-line interface.
 
@@ -10,7 +10,7 @@ The goal is to help users quickly diagnose system health, identify performance b
 
 # 🎯 Product Philosophy
 
-SysHealth is **not** another replacement for `top`, `htop`, or Activity Monitor.
+Winze is **not** another replacement for `top`, `htop`, or Activity Monitor.
 
 Instead, it aims to become:
 
@@ -52,25 +52,25 @@ Status: ⚪ Planned
 - [ ] JSON output
 
 ```
-syshealth --json
+winze --json
 ```
 
 - [ ] YAML output
 
 ```
-syshealth --yaml
+winze --yaml
 ```
 
 - [ ] Custom configuration
 
 ```
-syshealth --config custom.json
+winze --config custom.json
 ```
 
 - [ ] Version command
 
 ```
-syshealth --version
+winze --version
 ```
 
 - [ ] Beautiful terminal colors
@@ -97,10 +97,10 @@ Status: ⚪ Planned
 Command
 
 ```
-syshealth doctor
+winze doctor
 ```
 
-Instead of only reporting numbers, SysHealth begins diagnosing problems.
+Instead of only reporting numbers, winze begins diagnosing problems.
 
 Examples
 
@@ -139,7 +139,7 @@ Status: ⚪ Planned
 Commands
 
 ```
-syshealth monitor
+winze monitor
 ```
 
 Features
@@ -158,12 +158,12 @@ Features
 
 Status: ⚪ Planned
 
-SysHealth evolves into a development environment diagnostics toolkit.
+winze evolves into a development environment diagnostics toolkit.
 
 Command
 
 ```
-syshealth doctor
+winze doctor
 ```
 
 Checks
@@ -222,11 +222,11 @@ Status: ⚪ Planned
 Commands
 
 ```
-syshealth report
+winze report
 
-syshealth export
+winze export
 
-syshealth compare
+winze compare
 ```
 
 Features
@@ -247,7 +247,7 @@ Status: ⚪ Planned
 Command
 
 ```
-syshealth doctor --ai
+winze doctor --ai
 ```
 
 Capabilities
@@ -292,16 +292,16 @@ Status: ⚪ Planned
 
 # 🎯 Long-Term Vision
 
-SysHealth should become a lightweight diagnostics platform that developers and platform engineers can install with
+winze should become a lightweight diagnostics platform that developers and platform engineers can install with
 
 ```
-pip install syshealth
+pip install winze
 ```
 
 and immediately run
 
 ```
-syshealth doctor
+winze doctor
 ```
 
 to diagnose both system health and development environment issues within seconds.
